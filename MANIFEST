@@ -1,0 +1,11 @@
+Changes
+lib/Sledge/Cache.pm
+Makefile.PL
+MANIFEST			This list of files
+META.yml			Module meta-data (added by MakeMaker)
+t/00_compile.t
+t/01_pod.t
+t/02_pod_coverage.t
+t/03_methods.t
+t/04_get_key.t
+t/05_param.t
