@@ -4,7 +4,7 @@ use Test::More;
 
 BEGIN {
     eval "use Sledge::Exceptions";
-    plan $@ ? (skip_all => 'needs Sledge::Exceptions for testing') : (tests => 2);
+    plan $@ ? (skip_all => 'needs Sledge::Exceptions for testing') : (tests => 3);
 }
 
 BEGIN { use_ok 'Sledge::Cache' }
@@ -32,4 +32,7 @@ my $pages = Proj::Pages::Foo->new;
 my $cache = Sledge::Cache::Mock->new($pages);
 $cache->param(foo => 'bar');
 is $cache->param('foo'), 'bar', 'param as setter';
+
+$cache->get_callback(baz => sub {1+1});
+is $cache->param('baz'), 2, 'get_call';
 

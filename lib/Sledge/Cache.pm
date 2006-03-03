@@ -1,7 +1,7 @@
 package Sledge::Cache;
 use strict;
 use warnings;
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 use Sledge::Exceptions;
 
 sub new {
@@ -27,6 +27,18 @@ sub _get_key {
     my $base = ref $self->{_page} || $self->{_page};
     $base =~ s/::Pages.*//g;
     return "${base}_$key";
+}
+
+sub get_callback {
+    my ($self, $key, $callback, $expiry)  = @_;
+
+    my $data = $self->param($key);
+    return $data if defined $data;
+
+    $data = $callback->();
+    $self->param($key => $data) if defined $data;
+
+    return $data;
 }
 
 # public APIs:

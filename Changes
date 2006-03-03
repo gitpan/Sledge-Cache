@@ -1,4 +1,7 @@
 Revision history for Perl extension Sledge::Cache
 
+0.02  Sat Mar 04 03:05:30 2006
+    - added get_callback
+
 0.01  Thu Feb 23 00:07:03 2006
     - original version
