@@ -1,7 +1,7 @@
 package Sledge::Cache;
 use strict;
 use warnings;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 use Sledge::Exceptions;
 
 sub new {
@@ -67,6 +67,7 @@ Sledge::Cache - Abstract base class for sledge's cache class
 
 =head1 SYNOPSIS
 
+    package Sledge::Cache::Foo;
     use base 'Sledge::Cache';
     sub _init {
         my ($self, $page) = @_;
@@ -85,9 +86,59 @@ Sledge::Cache - Abstract base class for sledge's cache class
         # remove value
     }
 
+    package Your::Pages;
+    use Sledge::Cache::Foo;
+    sub create_cache { Sledge::Cache::Foo->new(shift) }
+    sub dispatch_shokotan {
+        my $self = shift;
+        my $shokotan = $self->cache->get_callback(
+            shokotan => sub { Your::Data->retrieve('shokotan') },
+        );
+        $self->tmpl->param(shokotan => $shokotan);
+    }
+
 =head1 DESCRIPTION
 
 Sledge::Cache is abstract base class for sledge's cache class.
+
+=head1 METHODS
+
+=head2 new
+
+Returns a new Sledge::Cache object.
+
+=head2 get_callback
+
+    my $shokotan = $self->cache->get_callback(
+        shokotan => sub { Your::Data->retrieve('shokotan') }
+    );
+
+This checks if a Shokotan can be found to match the information passed, and if not store it.
+
+=head2 param
+
+    my $shokotan = $self->cache->param('shokotan');
+    $self->cache->param('shokotan' => $shokotan);
+
+Get or set the cache(likes Sledge::Pages::Base, Sledge::Template, etc.).
+
+=head2 remove
+
+    $self->cache->remove('shokotan');
+
+Deletes a key.
+
+=head1 ABSTRACT METHODS
+
+=head2 _init(PAGES)
+
+=head2 _get(KEY)
+
+=head2 _set(KEY, VALUE, EXPTIME)
+
+=head2 _remove(KEY)
+
+You'll must override in your child class.
 
 =head1 AUTHOR
 
