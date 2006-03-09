@@ -1,5 +1,8 @@
 Revision history for Perl extension Sledge::Cache
 
+0.04  Thu Mar 09 19:54:34 2006
+    - get_callback expiry time bug fixed.
+
 0.03  Sat Mar 04 13:25:12 2006
     - update the pod.
 

@@ -1,7 +1,7 @@
 package Sledge::Cache;
 use strict;
 use warnings;
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 use Sledge::Exceptions;
 
 sub new {
@@ -36,7 +36,7 @@ sub get_callback {
     return $data if defined $data;
 
     $data = $callback->();
-    $self->param($key => $data) if defined $data;
+    $self->param($key => $data, $expiry) if defined $data;
 
     return $data;
 }
@@ -110,7 +110,7 @@ Returns a new Sledge::Cache object.
 =head2 get_callback
 
     my $shokotan = $self->cache->get_callback(
-        shokotan => sub { Your::Data->retrieve('shokotan') }
+        shokotan => sub { Your::Data->retrieve('shokotan') }, 5*60
     );
 
 This checks if a Shokotan can be found to match the information passed, and if not store it.
